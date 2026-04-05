@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light only">
+<title>Biodata - विशाल पाटील</title>
+<!-- NO external fonts — macOS has built-in Devanagari support via system fonts -->
+
+<style>
+    /* ─── Reset ─────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root { color-scheme: light; }
+
+    /* ─── Base ──────────────────────────────── */
+    body {
+        font-family: -apple-system, "Kohinoor Devanagari", "Noto Sans Devanagari", Arial, sans-serif;
+        background-color: #fdf0d5;
+        color: #222;
+        /* fluid font: 13px on 320px screen → 15px on 600px+ */
+        font-size: clamp(13px, 3.8vw, 15px);
+        line-height: 1.75;
+        padding: clamp(8px, 3vw, 24px) clamp(8px, 3vw, 16px);
+    }
+
+    .container {
+        max-width: 820px;
+        margin: 0 auto;
+        width: 100%;
+    }
+
+    /* ─── Cards ─────────────────────────────── */
+    .card {
+        background: #ffffff;
+        border-radius: 12px;
+        padding: clamp(12px, 4vw, 22px) clamp(12px, 4vw, 24px);
+        margin-bottom: 14px;
+        border: 1px solid #e8d5b0;
+        border-left: 5px solid #d4820a;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+        /* prevent overflow from breaking layout */
+        overflow: hidden;
+        word-break: break-word;
+    }
+
+    /* ─── Header card ───────────────────────── */
+    .header-card {
+        border-left: none;
+        border: none;
+        background: #8b1a1a;
+        border-radius: 12px;
+        padding: clamp(12px, 4vw, 26px) clamp(8px, 3vw, 18px);
+    }
+    .header-inner {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: clamp(8px, 3vw, 16px);
+        padding: 0 clamp(10px, 4vw, 28px);
+    }
+    .header-center {
+        flex: 1;
+        text-align: center;
+        min-width: 0;
+        padding: 0 4px;
+    }
+    .header-card .mantra {
+        font-size: clamp(14px, 4.5vw, 22px);
+        font-weight: 700;
+        color: #fff8e1;
+        margin-bottom: 4px;
+        line-height: 1.4;
+    }
+    .header-card .sub-mantra {
+        font-size: clamp(11px, 3.2vw, 15px);
+        color: #ffd580;
+        line-height: 1.4;
+    }
+    .header-card .name-line {
+        margin-top: clamp(6px, 2vw, 14px);
+        font-size: clamp(12px, 3.5vw, 18px);
+        color: #fff;
+        font-weight: 600;
+    }
+
+    /* ─── Deity photos ──────────────────────── */
+    .deity-wrap {
+        width: clamp(70px, 18vw, 104px);
+        height: clamp(70px, 18vw, 104px);
+        flex-shrink: 0;
+        border-radius: 50%;
+        overflow: hidden;
+        border: 3px solid #ffd580;
+        background: rgba(255,255,255,0.15);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 0 10px rgba(255,213,128,0.5);
+    }
+    .deity-wrap img {
+        width: 100%; height: 100%;
+        object-fit: cover;
+        display: block;
+    }
+    /* placeholder when image missing */
+    .deity-wrap img[src='ganesh.jpg']:not([complete]),
+    .deity-wrap img[src='ekvira.jpg']:not([complete]) {
+        font-size: 28px;
+    }
+
+    /* ─── Section title ─────────────────────── */
+    .section-title {
+        font-size: clamp(13px, 3.8vw, 16px);
+        font-weight: 700;
+        color: #6b1a1a;
+        padding-bottom: 7px;
+        border-bottom: 2px solid #f0d8a8;
+        margin-bottom: 10px;
+    }
+
+    /* ─── Info rows ─────────────────────────── */
+    .row {
+        display: flex;
+        flex-wrap: wrap;   /* wraps naturally if no room */
+        padding: 5px 0;
+        border-bottom: 1px solid #f5ead0;
+        gap: 4px 10px;
+    }
+    .row:last-child { border-bottom: none; }
+    .label {
+        font-weight: 600;
+        color: #5a2800;
+        /* fluid: 35% of width, min 100px, max 155px */
+        flex: 0 0 clamp(100px, 36%, 155px);
+        font-size: clamp(12px, 3.5vw, 14px);
+    }
+    .value {
+        color: #333;
+        flex: 1;
+        min-width: 120px;   /* forces wrap if space is tight */
+        font-size: clamp(12px, 3.5vw, 14px);
+    }
+
+    /* ─── Personal info + photo ─────────────── */
+    .info-with-photo {
+        display: flex;
+        gap: clamp(10px, 3vw, 16px);
+        align-items: flex-start;
+    }
+    .person-photo-wrap { flex-shrink: 0; }
+    .person-photo-wrap img {
+        width: clamp(80px, 22vw, 110px);
+        height: clamp(100px, 28vw, 140px);
+        object-fit: cover;
+        border-radius: 10px;
+        border: 2px solid #d4820a;
+        display: block;
+        background: #fff3d6;
+    }
+    .info-rows { flex: 1; min-width: 0; }
+
+    /* ─── Business link ─────────────────────── */
+    .biz-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        font-size: clamp(11px, 3vw, 13px);
+        color: #c0580a;
+        text-decoration: none;
+        font-weight: 500;
+        margin-top: 3px;
+        word-break: break-all;
+    }
+    .biz-link:hover { text-decoration: underline; }
+
+    /* ─── Address ───────────────────────────── */
+    .address-block {
+        background: #fffaf0;
+        border: 1px solid #e8d5b0;
+        border-radius: 8px;
+        padding: 10px 13px;
+        line-height: 1.95;
+        color: #333;
+        font-size: clamp(12px, 3.5vw, 14px);
+    }
+
+    /* ─── Relation tags ─────────────────────── */
+    .tag-list { display: flex; flex-wrap: wrap; gap: 6px; }
+    .tag {
+        background: #fff3d6;
+        border: 1px solid #e8c060;
+        color: #6b3a00;
+        border-radius: 20px;
+        padding: 3px 12px;
+        font-size: clamp(11px, 3vw, 13px);
+        font-weight: 500;
+    }
+
+    /* ─── Contact boxes ─────────────────────── */
+    .contact-list { display: flex; flex-direction: column; gap: 10px; }
+    .contact-box {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        background: #fff8e8;
+        border: 1px solid #e8c060;
+        border-radius: 8px;
+        padding: 10px 14px;
+        font-size: clamp(13px, 3.8vw, 15px);
+        font-weight: 600;
+        color: #4a2000;
+        word-break: break-all;
+    }
+    .contact-box .icon { font-size: clamp(16px, 4.5vw, 20px); flex-shrink: 0; }
+    .contact-box a {
+        color: inherit;
+        text-decoration: none;
+    }
+    .contact-box a:hover { text-decoration: underline; }
+
+    /* ─── Footer ────────────────────────────── */
+    .footer {
+        text-align: center;
+        padding: 12px 0;
+        font-size: 12px;
+        color: #9a7040;
+    }
+
+    /* ─── Print ─────────────────────────────── */
+    @media print {
+        body { background: #fff; padding: 0; }
+        .card { box-shadow: none; page-break-inside: avoid; }
+        .header-card { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+        .biz-link, .contact-box a { color: #000; }
+    }
+
+    /* ─── Very small phones (320–380px) ─────── */
+    @media (max-width: 380px) {
+        .info-with-photo { flex-direction: column; align-items: center; }
+        .person-photo-wrap img { width: 90px; height: 115px; }
+        .label { flex-basis: 100%; }
+        .value { min-width: 100%; }
+    }
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- Card 1: Header / Blessing -->
+    <!-- ⚠️ Put ganesh.jpg and ekvira.jpg in the same biodata folder -->
+    <div class="card header-card">
+        <div class="header-inner">
+            <div class="deity-wrap">
+                <img src="ganesh.webp" alt="श्री गणेश">
+            </div>
+            <div class="header-center">
+                <div class="mantra">॥ श्री गणेशाय नमः ॥</div>
+                <div class="sub-mantra">॥ कुलस्वामिनी प्रसन्न ॥</div>
+                <div class="name-line">परिचय पत्रिका</div>
+            </div>
+            <div class="deity-wrap">
+                <img src="ekvira.jpg" alt="कुलस्वामिनी एकविरा">
+            </div>
+        </div>
+    </div>
+
+    <!-- Card 2: Personal Info -->
+    <!-- ⚠️ Put vishal.jpg in the same biodata folder -->
+    <div class="card">
+        <div class="section-title">वैयक्तिक माहिती</div>
+        <div class="info-rows">
+                <div class="row"><div class="label">नाव</div><div class="value">चि. विशाल धनराज पाटील</div></div>
+                <div class="row"><div class="label">जन्म तारीख</div><div class="value">16 मे 1999</div></div>
+                <div class="row"><div class="label">जन्म वेळ</div><div class="value">6:35 PM</div></div>
+                <div class="row"><div class="label">जन्म स्थळ</div><div class="value">विंचूर</div></div>
+                <div class="row"><div class="label">वर्ण</div><div class="value">सावळा</div></div>
+                <div class="row"><div class="label">रक्त गट</div><div class="value">AB+</div></div>
+                <div class="row"><div class="label">उंची</div><div class="value">5 फूट 9 इंच</div></div>
+        </div>
+        <!-- Photo: uncomment when vishal.jpg is available
+        <div class="person-photo-wrap">
+            <img src="vishal.jpg" alt="विशाल पाटील">
+        </div>
+        -->
+    </div>
+
+    <!-- Card 3: Education / Job -->
+    <div class="card">
+        <div class="section-title">शिक्षण व व्यवसाय</div>
+        <div class="row"><div class="label">कुळ</div><div class="value">सावंत</div></div>
+        <div class="row"><div class="label">शिक्षण</div><div class="value">MCA ( Full Stack python )</div></div>
+        <div class="row"><div class="label">नोकरी</div><div class="value"><a class="biz-link" href="https://iresearchservices.com/" target="_blank">iResearch Services Pvt. Ltd.</a> , Full Stack Developer, पुणे</div></div>
+        <div class="row"><div class="label">पॅकेज</div><div class="value">10.50 लाख</div></div>
+    </div>
+
+    <!-- Card 4: Family Info -->
+    <div class="card">
+        <div class="section-title">कुटुंब माहिती</div>
+        <div class="row"><div class="label">वडिलांचे नाव</div><div class="value">कै.डॉ.धनराज गंगाधर पाटील ( आर्मी डॉक्टर )</div></div>
+        <div class="row"><div class="label">आईचे नाव</div><div class="value">गं.भा.सुशीला धनराज सावंत</div></div>
+        <div class="row"><div class="label">भाउ</div><div class="value">ह.भ.प.भागवताचार्य श्री पवन धनराज पाटील<br>
+                <a class="biz-link" href="https://mauliyatra.com/" target="_blank">&#127759; mauliyatra.com &mdash; Tours &amp; Travel Business</a>
+            </div></div>
+        <div class="row"><div class="label">वाहिनी</div><div class="value">सौ.वर्षा पवन पाटील ( M.Com )</div></div>
+        <div class="row"><div class="label">मेहुणे</div><div class="value">श्री.भूषण अंबर पाटील — <a class="biz-link" href="https://www.jains.com/" target="_blank">Jain Irrigation Systems Ltd.</a></div></div>
+        <div class="row"><div class="label">बहीण</div><div class="value">सौ.गौरी भूषण पाटील ( शिक्षिका )</div></div>
+        <div class="row"><div class="label">मामा (कुळ )</div><div class="value">श्री प्रकाश बाळू बोरसे — विंचूर, धुळे</div></div>
+    </div>
+
+    <!-- Card 5: Address -->
+    <div class="card">
+        <div class="section-title">पत्ता</div>
+        <div class="address-block">
+            मु.पो.चमगांव ता. धरनगाव जि. जळगाव<br>
+            ह.मु.खोटे नगर जळगाव.<br>
+
+        </div>
+    </div>
+
+    <!-- Card 6: Relations -->
+    <div class="card">
+        <div class="section-title">नाते संबंध</div>
+        <div class="tag-list">
+            <span class="tag">लोणी</span>
+            <span class="tag">शिरपुर</span>
+            <span class="tag">विंचूर</span>
+            <span class="tag">बोरकुंड </span>
+            <span class="tag">पाचोरा</span>
+            <span class="tag">कुसुंबा</span>
+            <span class="tag">आळंदी</span>
+            <span class="tag">करमाड</span>
+        </div>
+    </div>
+
+    <!-- Card 7: Contact -->
+    <div class="card">
+        <div class="section-title">संपर्क</div>
+        <div class="contact-list">
+            <div class="contact-box">
+                <span class="icon">📞</span>
+                <a href="tel:8788236143">8788236143</a>
+            </div>
+            <div class="contact-box">
+                <span class="icon">📸</span>
+                <a href="https://instagram.com/vishal_patil" target="_blank">@vishal_patil</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">© Biodata — विशाल धनराज पाटील</div>
+
+</div>
+
+</body>
+</html>
